@@ -14,4 +14,4 @@ spec:
       targetPort: 80
 
 
-# kubectl apply -f prestashop-service.yml
+# kubectl apply -f prestashop-service.yml 
