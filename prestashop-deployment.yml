@@ -1,0 +1,41 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prestashop
+  labels:
+    app: prestashop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prestashop
+  template:
+    metadata:
+      labels:
+        app: prestashop
+    spec:
+      containers:
+      - name: prestashop
+        image: aangiel/prestashop
+        env:
+          - name: DB_SERVER
+            value: "mysql"
+          - name: DB_NAME
+            value: "prestashop"
+          - name: DB_USER
+            value: "user"
+          - name: DB_PASSWD
+            value: "password"
+        ports:
+          - containerPort: 80
+        volumeMounts:
+          - name: prestashop-storage
+            mountPath: /var/www/html
+      volumes:
+        - name: prestashop-storage
+          persistentVolumeClaim:
+            claimName: prestashop-claim
+
+# kubectl apply -f prestashop-deployment.yml
